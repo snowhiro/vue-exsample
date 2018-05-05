@@ -47,19 +47,25 @@ const BP_WORK_ADMIN_VIEW = {
 ` ,
     data: function () {
         const dayList = [];
-        const year = 2018;
-        const month = 4;
-        for (var i = 1; i <= 30; i++) {
-            const day = {
-                day: new Date(year, month, i),
-                start: "",
-                end: "",
-                breakTime: "",
-                workTime: "",
-                note: ""
-            };
-            dayList.push(day);
-        }
+        // const year = 2018;
+        var month = "";
+        
+        await axios.post('http://localhost:8080/bpWorkAdmin/findList').then(result => {
+            const data = result.data;
+            month = data.month;
+            console.log("result.list", data);
+            data.list.forEach(function(value) {
+                const day = {
+                    day: new Date(value.dayTime),
+                    start: "",
+                    end: "",
+                    breakTime: "",
+                    workTime: "",
+                    note: ""
+                };
+                dayList.push(day);
+            })
+        });
         return {
             name: "sample-user-name",
             month: month + "月",
@@ -100,6 +106,8 @@ const BP_WORK_ADMIN_VIEW = {
                         const end = new Date(date.getYear(), date.getMonth() + 1, date.getDate(), parseInt(endHour,10), parseInt(endMin,10));
                         const workTime = (end.getTime() - start.getTime() - ((1000 * 60 * 60) * value.breakTime)) / 1000 / 60 / 60;
                         value.workTime = workTime;
+                       
+                        
                     }
                 });
                 var sum = 0;
