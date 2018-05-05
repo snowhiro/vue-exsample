@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <!-- Add this to <head> -->
+    <link type="text/css" rel="stylesheet" href="./css/lib/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="./css/lib/bootstrap-vue.css" />
+    <link type="text/css" rel="stylesheet" href="./css/common.css" />
+    <body>
+        <div id="body">
+            <header>
+                <div class="left">
+                    <h1>{{ pjTitle }}</h1>
+                </div>
+                <div class="right">
+                    <b-dropdown id="ddown1" text="Menu" right>
+                        <b-dropdown-item v-for="menu in menuList" :key="menu.id" router-tag="a" :to="menu.path">{{menu.title}}</b-dropdown-item>
+                    </b-dropdown>
+                </div>
+            </header>
+            <div class="clear"></div>
+            <router-view></router-view>  
+            <footer>
+
+            </footer>
+        </div>
+
+    </body>
+
+    
+
+    <!-- vue.js-->
+    <script src="./js/lib/vue.js"></script>
+    <!-- vue-router.js -->
+    <script src="./js/lib/vue-router.js"></script>
+
+    <!-- Add this after vue.js -->
+    <script src="./js/lib/polyfill.min.js"></script>
+    <script src="./js/lib/bootstrap-vue.js"></script>
+    
+    <script src="./js/lib/axios.min.js"></script>
+
+    <!-- component-->
+    <script src="./js/component.js"></script>
+
+
+    
+    <!-- pj-common -->
+    <script src="./js/common.js"></script>
+
+    <!-- view -->
+    <script src="./js/view/bpWorkAdmin.js"></script>
+    <script src="./js/view/pjAdmin.js"></script>
+    
+    <!-- main -->
+    <script type="text/javascript">
+
+        
+        const PJ_ADMIN_VIEW = { template: '<div>bar</div>' }
+
+        const routes = [
+            { path: '/bpWorkAdmin', component: BP_WORK_ADMIN_VIEW },
+            { path: '/pjAdmin', component: PJ_ADMIN_VIEW }
+        ]
+
+        const router = new VueRouter({
+            routes // `routes: routes` の短縮表記
+        })
+
+        // menuの定義
+        var menuList = new Array();
+        menuList.push({
+            id: 1,
+            title: "BP勤怠管理",
+            path: "/bpWorkAdmin"
+        });
+        menuList.push({
+            id: 2,
+            title: "PJ管理",
+            path: "/pjAdmin"
+        });
+
+        // vueインスタンスの生成
+        var app = new Vue({
+            router,
+            data: {
+                pjTitle: '管理くん',
+                menuList: menuList
+            }
+        }).$mount('#body');
+
+        // view
+
+
+    </script>
+
+</html>
