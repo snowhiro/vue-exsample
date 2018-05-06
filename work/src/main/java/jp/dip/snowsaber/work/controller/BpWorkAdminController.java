@@ -2,17 +2,22 @@ package jp.dip.snowsaber.work.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import jp.dip.snowsaber.work.service.BpWorkAdminService;
 
 @RestController
 public class BpWorkAdminController {
 
 	private static final String BASE_URL = "bpWorkAdmin";
+
+	@Autowired
+	private BpWorkAdminService servie;
 
 	@RequestMapping(value = BASE_URL + "/findList", method = RequestMethod.POST)
 	public BpWorkAdminIndex findList() {
@@ -28,6 +33,9 @@ public class BpWorkAdminController {
 		BpWorkAdminIndex result = new BpWorkAdminIndex();
 		result.setMonth("4");
 		result.setList(list);
+
+		servie.find();
+
 		return result;
 	}
 

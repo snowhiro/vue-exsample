@@ -1,10 +1,19 @@
+// const axios = Axios.create({
+//     baseURL: 'http://localhost:8080', // バックエンドB のURL:port を指定する
+//     headers: {
+//       'ContentType': 'application/json',
+//       'X-Requested-With': 'XMLHttpRequest'
+//     },
+// });
+axios.baseURL = 'http://localhost:8080';
+
 /**
  * 日付をフォーマットする
  * @param  {Date}   date     日付
  * @param  {String} [format] フォーマット
  * @return {String}          フォーマット済み日付
  */
-var formatDate = function (date, format) {
+const formatDate = function (date, format) {
     if (!format) format = 'YYYY-MM-DD hh:mm:ss.SSS';
     format = format.replace(/YYYY/g, date.getFullYear());
     format = format.replace(/MM/g, ('0' + (date.getMonth())).slice(-2));
